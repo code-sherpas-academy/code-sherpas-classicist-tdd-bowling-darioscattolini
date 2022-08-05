@@ -52,4 +52,9 @@ class CalculateScoreTest {
     fun `returns 10 for strike in first frame and no pins knocked down in next frame`() {
         assertThat(calculateScore("X|--|--|--|--|--|--|--|--|--||")).isEqualTo(10)
     }
+
+    @Test
+    fun `returns correct score for frame 1 strike, frame 2 attempt 1 not strike`() {
+        assertThat(calculateScore("X|3-|--|--|--|--|--|--|--|--||")).isEqualTo(16)
+    }
 }
