@@ -3,7 +3,7 @@
  */
 package sample
 
-fun calculateScore(input: String): Int {
+tailrec fun calculateScore(input: String): Int {
     if (input == "") return 0
 
     var score = 0
