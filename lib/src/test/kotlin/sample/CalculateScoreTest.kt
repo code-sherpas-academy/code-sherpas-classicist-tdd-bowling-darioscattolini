@@ -5,6 +5,8 @@ package sample
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 
 class CalculateScoreTest {
@@ -13,38 +15,21 @@ class CalculateScoreTest {
         assertThat(calculateScore("--|--|--|--|--|--|--|--|--|--||")).isEqualTo(0)
     }
 
-    @Test
-    fun `returns amount of pins knocked down for frame 1, attempt 1, no strike`() {
-        assertThat(calculateScore("3-|--|--|--|--|--|--|--|--|--||")).isEqualTo(3)
+    @ParameterizedTest
+    @CsvSource(
+        "3-|--|--|--|--|--|--|--|--|--||, 3",
+        "-7|--|--|--|--|--|--|--|--|--||, 7",
+        "26|--|--|--|--|--|--|--|--|--||, 8",
+        "--|--|--|4-|--|--|--|--|--|--||, 4",
+        "--|--|--|--|-5|--|--|--|--|--||, 5",
+        "--|--|--|--|--|--|--|--|71|--||, 8"
+    )
+    fun `returns amount of pins knocked down for any frame without strike or spare`(input: String, expectedScore: Int) {
+        assertThat(calculateScore(input)).isEqualTo(expectedScore)
     }
 
     @Test
-    fun `returns amount of pins knocked down for frame 1, attempt 2, no spare`() {
-        assertThat(calculateScore("-7|--|--|--|--|--|--|--|--|--||")).isEqualTo(7)
-    }
-
-    @Test
-    fun `returns amount of pins knocked down for frame 1, two attempts, no spare`() {
-        assertThat(calculateScore("26|--|--|--|--|--|--|--|--|--||")).isEqualTo(8)
-    }
-
-    @Test
-    fun `returns amount of pins knocked down for any frame, attempt 1, no strike`() {
-        assertThat(calculateScore("--|--|--|4-|--|--|--|--|--|--||")).isEqualTo(4)
-    }
-
-    @Test
-    fun `returns amount of pins knocked down for any frame, attempt 2, no spare`() {
-        assertThat(calculateScore("--|--|--|--|-5|--|--|--|--|--||")).isEqualTo(5)
-    }
-
-    @Test
-    fun `returns amount of pins knocked down for any frame, two attempts, no spare`() {
-        assertThat(calculateScore("--|--|--|--|71|--|--|--|--|--||")).isEqualTo(8)
-    }
-
-    @Test
-    fun `returns amount of pins knocked down for many frames, two attempts, no strikes nor spares`() {
+    fun `returns amount of pins knocked down for many frames without strikes or spares`() {
         assertThat(calculateScore("--|2-|-3|18|-1|--|6-|--|-4|--||")).isEqualTo(25)
     }
 
