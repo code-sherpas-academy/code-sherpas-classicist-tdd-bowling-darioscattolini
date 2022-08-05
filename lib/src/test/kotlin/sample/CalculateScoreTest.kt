@@ -33,23 +33,14 @@ class CalculateScoreTest {
         assertThat(calculateScore("--|2-|-3|18|-1|--|6-|--|-4|--||")).isEqualTo(25)
     }
 
-    @Test
-    fun `returns 10 for strike in first frame and no pins knocked down in next frame`() {
-        assertThat(calculateScore("X|--|--|--|--|--|--|--|--|--||")).isEqualTo(10)
-    }
-
-    @Test
-    fun `returns correct score for frame 1 strike, frame 2 attempt 1 not strike`() {
-        assertThat(calculateScore("X|3-|--|--|--|--|--|--|--|--||")).isEqualTo(16)
-    }
-
-    @Test
-    fun `returns correct score for frame 1 strike, frame 2 attempt 2 not spare`() {
-        assertThat(calculateScore("X|-7|--|--|--|--|--|--|--|--||")).isEqualTo(24)
-    }
-
-    @Test
-    fun `returns correct score for frame 1 strike, frame 2 two attempts not spare`() {
-        assertThat(calculateScore("X|26|--|--|--|--|--|--|--|--||")).isEqualTo(26)
+    @ParameterizedTest
+    @CsvSource(
+        "X|--|--|--|--|--|--|--|--|--||, 10",
+        "X|3-|--|--|--|--|--|--|--|--||, 16",
+        "X|-7|--|--|--|--|--|--|--|--||, 24",
+        "X|26|--|--|--|--|--|--|--|--||, 26"
+    )
+    fun `returns 10 + pins knocked down in next two attempts for any frame with strike`(input: String, expectedScore: Int) {
+        assertThat(calculateScore(input)).isEqualTo(expectedScore)
     }
 }
