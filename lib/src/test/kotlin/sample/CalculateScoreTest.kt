@@ -10,6 +10,6 @@ import org.junit.jupiter.api.Test
 class CalculateScoreTest {
     @Test
     fun `returns 0 for no pins knocked down`() {
-        assertThatcalculateScore("--|--|--|--|--|--|--|--|--|--||")).isEqualTo(0)
+        assertThat(calculateScore("--|--|--|--|--|--|--|--|--|--||")).isEqualTo(0)
     }
 }
