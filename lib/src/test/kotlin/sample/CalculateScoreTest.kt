@@ -7,10 +7,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 
-class LibraryTest {
+class CalculateScoreTest {
     @Test
-    fun someLibraryMethodReturnsTrue() {
-        val classUnderTest = Library()
-        assertThat(classUnderTest.someLibraryMethod()).isTrue
+    fun `returns 0 for no pins knocked down`() {
+        assertThatcalculateScore("--|--|--|--|--|--|--|--|--|--||")).isEqualTo(0)
     }
 }
