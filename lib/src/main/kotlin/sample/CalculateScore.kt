@@ -10,5 +10,7 @@ tailrec fun calculateScore(input: String): Int {
     if (input[0] != '-') score += input[0].digitToInt()
     if (input[1] != '-') score += input[1].digitToInt()
 
-    return score + calculateScore(input.drop(3).dropWhile { it == '|' })
+    val nextScores = input.drop(3).dropWhile { it == '|' }
+
+    return score + calculateScore(nextScores)
 }
