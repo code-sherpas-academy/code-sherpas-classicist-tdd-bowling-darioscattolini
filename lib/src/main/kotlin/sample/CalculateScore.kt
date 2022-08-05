@@ -7,10 +7,18 @@ tailrec fun calculateScore(input: String): Int {
     if (input == "") return 0
 
     var score = 0
-    if (input[0] != '-') score += input[0].digitToInt()
-    if (input[1] != '-') score += input[1].digitToInt()
+    var toBeDropped = 0
 
-    val nextScores = input.drop(3).dropWhile { it == '|' }
+    if (input[0] == 'X') {
+        score += 10 + if (input[2] != '-') 3 else 0
+        toBeDropped = 2
+    } else {
+        if (input[0] != '-') score += input[0].digitToInt()
+        if (input[1] != '-') score += input[1].digitToInt()
+        toBeDropped = 3
+    }
+
+    val nextScores = input.drop(toBeDropped).dropWhile { it == '|' }
 
     return score + calculateScore(nextScores)
 }
