@@ -4,12 +4,11 @@
 package sample
 
 fun calculateScore(input: String): Int {
+    if (input == "") return 0
+
     var score = 0
     if (input[0] != '-') score += input[0].digitToInt()
     if (input[1] != '-') score += input[1].digitToInt()
-    if (input[9] != '-') score += 4
-    if (input[12] != '-') score += 7
-    if (input[13] != '-') score += input[13].digitToInt()
 
-    return score
+    return score + calculateScore(input.drop(3).dropWhile { it == '|' })
 }
