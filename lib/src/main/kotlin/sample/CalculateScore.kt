@@ -7,7 +7,7 @@ tailrec fun calculateScore(input: String): Int {
     if (input == "") return 0
 
     var score = 0
-    var toBeDropped = 0
+    var toBeDropped: Int
 
     if (input[0] == 'X') {
         score += 10
