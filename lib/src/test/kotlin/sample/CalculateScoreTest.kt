@@ -22,4 +22,9 @@ class CalculateScoreTest {
     fun `returns amount of pins knocked down for frame 1, attempt 2, no spare`() {
         assertThat(calculateScore("-7|--|--|--|--|--|--|--|--|--||")).isEqualTo(7)
     }
+
+    @Test
+    fun `returns amount of pins knocked down for frame 1, two attempts, no spare`() {
+        assertThat(calculateScore("26|--|--|--|--|--|--|--|--|--||")).isEqualTo(8)
+    }
 }
