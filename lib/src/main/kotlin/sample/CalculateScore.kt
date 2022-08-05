@@ -3,4 +3,10 @@
  */
 package sample
 
-fun calculateScore(input: String) = if (input[0] == '-') 0 else 3
+fun calculateScore(input: String): Int {
+    var score = 0
+    if (input[0] != '-') score += 3
+    if (input[1] != '-') score += 7
+
+    return score
+}
