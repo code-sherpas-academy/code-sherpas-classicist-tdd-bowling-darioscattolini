@@ -3,4 +3,4 @@
  */
 package sample
 
-fun calculateScore(input: String) = 0
+fun calculateScore(input: String) = if (input[0] == '-') 0 else 3
