@@ -11,8 +11,14 @@ tailrec fun calculateScore(input: String): Int {
 
     if (input[0] == 'X') {
         score += 10
-        if (input[2] != '-') score += input[2].digitToInt()
-        if (input[3] != '-') score += input[3].digitToInt()
+
+        if (input[2] == 'X') {
+            score += 10
+        } else {
+            if (input[2] != '-') score += input[2].digitToInt()
+            if (input[3] != '-') score += input[3].digitToInt()
+        }
+
         toBeDropped = 2
     } else {
         if (input[0] != '-') score += input[0].digitToInt()
