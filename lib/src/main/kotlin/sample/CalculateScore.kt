@@ -7,6 +7,7 @@ fun calculateScore(input: String): Int {
     var score = 0
     if (input[0] != '-') score += input[0].digitToInt()
     if (input[1] != '-') score += input[1].digitToInt()
+    if (input[9] != '-') score += 4
 
     return score
 }
