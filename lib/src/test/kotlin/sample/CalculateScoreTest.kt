@@ -62,4 +62,9 @@ class CalculateScoreTest {
     fun `returns correct score for frame 1 strike, frame 2 attempt 2 not spare`() {
         assertThat(calculateScore("X|-7|--|--|--|--|--|--|--|--||")).isEqualTo(24)
     }
+
+    @Test
+    fun `returns correct score for frame 1 strike, frame 2 two attempts not spare`() {
+        assertThat(calculateScore("X|26|--|--|--|--|--|--|--|--||")).isEqualTo(26)
+    }
 }
