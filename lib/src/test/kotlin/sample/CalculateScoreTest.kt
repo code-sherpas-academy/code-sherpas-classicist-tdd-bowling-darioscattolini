@@ -41,6 +41,7 @@ class CalculateScoreTest {
         "X|26|--|--|--|--|--|--|--|--||, 26",
         "X|X|--|--|--|--|--|--|--|--||, 30",
         "X|X|31|--|--|--|--|--|--|--||, 41",
+        "--|--|X|71|--|--|--|--|--|--||, 28",
     )
     fun `returns 10 + pins knocked down in next two attempts for any frame with strike`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
