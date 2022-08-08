@@ -3,39 +3,37 @@
  */
 package sample
 
-fun calculateScore(input: String): Int {
-    val frames = getFrames(input)
+fun calculateScore(input: String) = convertToFrames(input).sumOf { it.score }
 
-    return calculateFramesScore(frames)
-}
+private fun convertToFrames(input: String): List<Frame> {
+    val stringFrames = input.replace('-', '0').split("||", "|")
 
-private fun getFrames(input: String) = input.replace('-', '0').split("||", "|").dropLast(1)
+    return (0..9).map {
+        val frame = stringFrames[it]
 
-private tailrec fun calculateFramesScore(frames: List<String>): Int {
-    if (frames.isEmpty()) return 0
+        if (frame == "X") {
+            val firstRoll = 10
+            val nextFrame = stringFrames[it + 1]
+            var firstBonusRoll: Int
+            var secondBonusRoll: Int
 
-    val currentFrame = frames.first()
-    val nextFrames = frames.drop(1)
+            if (nextFrame == "X") {
+                val secondNextFrame = stringFrames[it + 2]
+                firstBonusRoll = 10
+                secondBonusRoll = if (secondNextFrame == "X") 10 else secondNextFrame[0].digitToInt()
+            } else {
+                val bonusRolls = getRollsScores(nextFrame)
+                firstBonusRoll = bonusRolls.first
+                secondBonusRoll = bonusRolls.second
+            }
 
-    val score = if (currentFrame == "X") {
-        calculateStrikeScore(nextFrames.getOrElse(0) { "00" }, nextFrames.getOrElse(1) { "00" })
-    } else {
-        addKnockedDownPins(currentFrame)
+            Frame(firstRoll, firstBonusRoll = firstBonusRoll, secondBonusRoll = secondBonusRoll)
+        } else {
+            val (firstRoll, secondRoll) = getRollsScores(frame)
+
+            Frame(firstRoll, secondRoll)
+        }
     }
-
-    return score + calculateFramesScore(nextFrames)
 }
 
-private fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
-    return if (nextFrame == "X" && secondNextFrame == "X") {
-        30
-    } else if (nextFrame == "X") {
-        20 + secondNextFrame[0].digitToInt()
-    } else {
-        10 + addKnockedDownPins(nextFrame)
-    }
-}
-
-private fun addKnockedDownPins(frame: String): Int {
-    return frame.sumOf { it.digitToInt() }
-}
+private fun getRollsScores(frame: String): Pair<Int, Int> = Pair(frame[0].digitToInt(), frame[1].digitToInt())
