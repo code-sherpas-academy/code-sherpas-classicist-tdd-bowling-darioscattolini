@@ -62,4 +62,9 @@ class CalculateScoreTest {
     fun `adds two extra attempts after strike in last frame`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
     }
+
+    @Test
+    fun `returns 300 for all strikes`() {
+        assertThat(calculateScore("X|X|X|X|X|X|X|X|X|X||XX")).isEqualTo(300)
+    }
 }
