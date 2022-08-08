@@ -3,31 +3,34 @@
  */
 package sample
 
-tailrec fun calculateScore(input: String): Int {
-    if (input == "") return 0
+fun calculateScore(input: String): Int {
+    val frames = input.split("||", "|").dropLast(1)
+
+    return calculateFramesScore(frames)
+}
+
+internal tailrec fun calculateFramesScore(frames: List<String>): Int {
+    if (frames.isEmpty()) return 0
+
+    val currentFrame = frames.first()
+    val nextFrames = frames.drop(1)
 
     var score = 0
-    var toBeDropped: Int
 
-    if (input[0] == 'X') {
+    if (currentFrame == "X") {
         score += 10
 
-        if (input[2] == 'X') {
+        if (nextFrames[0] == "X") {
             score += 10
-            if (input[4] != '-') score += input[4].digitToInt()
+            if (nextFrames[1][0] != '-') score += nextFrames[1][0].digitToInt()
         } else {
-            if (input[2] != '-') score += input[2].digitToInt()
-            if (input[3] != '-') score += input[3].digitToInt()
+            if (nextFrames[0][0] != '-') score += nextFrames[0][0].digitToInt()
+            if (nextFrames[0][1] != '-') score += nextFrames[0][1].digitToInt()
         }
-
-        toBeDropped = 2
     } else {
-        if (input[0] != '-') score += input[0].digitToInt()
-        if (input[1] != '-') score += input[1].digitToInt()
-        toBeDropped = 3
+        if (currentFrame[0] != '-') score += currentFrame[0].digitToInt()
+        if (currentFrame[1] != '-') score += currentFrame[1].digitToInt()
     }
 
-    val nextScores = input.drop(toBeDropped).dropWhile { it == '|' }
-
-    return score + calculateScore(nextScores)
+    return score + calculateFramesScore(nextFrames)
 }
