@@ -56,6 +56,8 @@ class CalculateScoreTest {
         "--|--|--|--|--|--|--|--|--|X||34, 17",
         "--|--|--|--|--|--|--|--|--|X||3X, 23",
         "--|--|--|--|--|--|--|--|--|X||XX, 30",
+        "--|--|--|--|--|--|--|--|X|X||-4, 34",
+        "--|--|--|--|--|--|--|--|X|X||24, 38",
     )
     fun `adds two extra attempts after strike in last frame`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
