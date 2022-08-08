@@ -25,7 +25,9 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
 }
 
 internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
-    return if (nextFrame == "X") {
+    return if (nextFrame == "X" && secondNextFrame == "X") {
+        30
+    } else if (nextFrame == "X") {
         20 + secondNextFrame[0].digitToInt()
     } else {
         10 + addKnockedDownPins(nextFrame)
