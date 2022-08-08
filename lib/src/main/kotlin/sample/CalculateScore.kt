@@ -20,8 +20,7 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
     if (currentFrame == "X") {
         score += calculateStrikeScore(nextFrames[0], nextFrames[1])
     } else {
-        score += currentFrame[0].digitToInt()
-        score += currentFrame[1].digitToInt()
+        score += addKnockedDownPins(currentFrame)
     }
 
     return score + calculateFramesScore(nextFrames)
@@ -34,9 +33,12 @@ internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): I
         score += 10
         score += secondNextFrame[0].digitToInt()
     } else {
-        score += nextFrame[0].digitToInt()
-        score += nextFrame[1].digitToInt()
+        score += addKnockedDownPins(nextFrame)
     }
 
     return score
+}
+
+internal fun addKnockedDownPins(frame: String): Int {
+    return frame.sumOf { it.digitToInt() }
 }
