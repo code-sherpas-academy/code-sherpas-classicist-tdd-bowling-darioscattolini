@@ -15,29 +15,23 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
     val currentFrame = frames.first()
     val nextFrames = frames.drop(1)
 
-    var score = 0
-
-    if (currentFrame == "X") {
-        score += calculateStrikeScore(nextFrames[0], nextFrames[1])
+    val score = if (currentFrame == "X") {
+        calculateStrikeScore(nextFrames[0], nextFrames[1])
     } else {
-        score += addKnockedDownPins(currentFrame)
+        addKnockedDownPins(currentFrame)
     }
 
     return score + calculateFramesScore(nextFrames)
 }
 
 internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
-    var score = 10
-
-    if (nextFrame == "X") {
-        score += 10
-        score += secondNextFrame[0].digitToInt()
+    return if (nextFrame == "X") {
+        20 + secondNextFrame[0].digitToInt()
     } else {
-        score += addKnockedDownPins(nextFrame)
+        10 + addKnockedDownPins(nextFrame)
     }
-
-    return score
 }
+
 
 internal fun addKnockedDownPins(frame: String): Int {
     return frame.sumOf { it.digitToInt() }
