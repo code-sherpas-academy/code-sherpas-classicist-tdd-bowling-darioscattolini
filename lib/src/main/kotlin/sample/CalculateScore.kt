@@ -11,29 +11,31 @@ private fun convertToFrames(input: String): List<Frame> {
         .take(10)
         .map { Triple(it[0], it.getOrElse(1) { "00" }, it.getOrElse(2) { "00" }) }
 
-    return frameData.map {
-        val (frame, nextFrame, frameAfterNext) = it
+    return frameData.map(buildFrame)
+}
 
-        if (frame == "X") {
-            val firstRoll = 10
-            var firstBonusRoll: Int
-            var secondBonusRoll: Int
+private val buildFrame = { frameData: Triple<String, String, String> ->
+    val (frame, nextFrame, frameAfterNext) = frameData
 
-            if (nextFrame == "X") {
-                firstBonusRoll = 10
-                secondBonusRoll = if (frameAfterNext == "X") 10 else frameAfterNext[0].digitToInt()
-            } else {
-                val bonusRolls = getRollsScores(nextFrame)
-                firstBonusRoll = bonusRolls.first
-                secondBonusRoll = bonusRolls.second
-            }
+    if (frame == "X") {
+        val firstRoll = 10
+        var firstBonusRoll: Int
+        var secondBonusRoll: Int
 
-            Frame(firstRoll, firstBonusRoll = firstBonusRoll, secondBonusRoll = secondBonusRoll)
+        if (nextFrame == "X") {
+            firstBonusRoll = 10
+            secondBonusRoll = if (frameAfterNext == "X") 10 else frameAfterNext[0].digitToInt()
         } else {
-            val (firstRoll, secondRoll) = getRollsScores(frame)
-
-            Frame(firstRoll, secondRoll)
+            val bonusRolls = getRollsScores(nextFrame)
+            firstBonusRoll = bonusRolls.first
+            secondBonusRoll = bonusRolls.second
         }
+
+        Frame(firstRoll, firstBonusRoll = firstBonusRoll, secondBonusRoll = secondBonusRoll)
+    } else {
+        val (firstRoll, secondRoll) = getRollsScores(frame)
+
+        Frame(firstRoll, secondRoll)
     }
 }
 
