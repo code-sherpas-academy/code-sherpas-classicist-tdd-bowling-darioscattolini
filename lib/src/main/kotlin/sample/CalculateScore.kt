@@ -9,9 +9,9 @@ fun calculateScore(input: String): Int {
     return calculateFramesScore(frames)
 }
 
-internal fun getFrames(input: String) = input.replace('-', '0').split("||", "|").dropLast(1)
+private fun getFrames(input: String) = input.replace('-', '0').split("||", "|").dropLast(1)
 
-internal tailrec fun calculateFramesScore(frames: List<String>): Int {
+private tailrec fun calculateFramesScore(frames: List<String>): Int {
     if (frames.isEmpty()) return 0
 
     val currentFrame = frames.first()
@@ -26,7 +26,7 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
     return score + calculateFramesScore(nextFrames)
 }
 
-internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
+private fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
     return if (nextFrame == "X" && secondNextFrame == "X") {
         30
     } else if (nextFrame == "X") {
@@ -36,7 +36,6 @@ internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): I
     }
 }
 
-
-internal fun addKnockedDownPins(frame: String): Int {
+private fun addKnockedDownPins(frame: String): Int {
     return frame.sumOf { it.digitToInt() }
 }
