@@ -18,19 +18,25 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
     var score = 0
 
     if (currentFrame == "X") {
-        score += 10
-
-        if (nextFrames[0] == "X") {
-            score += 10
-            score += nextFrames[1][0].digitToInt()
-        } else {
-            score += nextFrames[0][0].digitToInt()
-            score += nextFrames[0][1].digitToInt()
-        }
+        score += calculateStrikeScore(nextFrames[0], nextFrames[1])
     } else {
         score += currentFrame[0].digitToInt()
         score += currentFrame[1].digitToInt()
     }
 
     return score + calculateFramesScore(nextFrames)
+}
+
+internal fun calculateStrikeScore(nextFrame: String, secondNextFrame: String): Int {
+    var score = 10
+
+    if (nextFrame == "X") {
+        score += 10
+        score += secondNextFrame[0].digitToInt()
+    } else {
+        score += nextFrame[0].digitToInt()
+        score += nextFrame[1].digitToInt()
+    }
+
+    return score
 }
