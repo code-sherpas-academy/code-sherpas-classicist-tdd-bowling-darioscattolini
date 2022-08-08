@@ -19,19 +19,11 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
 
     if (frame == "X") {
         val firstRoll = 10
-        var firstBonusRoll: Int
-        var secondBonusRoll: Int
+        val bonusRolls = (nextFrame.toCharArray() + frameAfterNext.toCharArray())
+            .take(2)
+            .map { if (it == 'X') 10 else it.digitToInt()}
 
-        if (nextFrame == "X") {
-            firstBonusRoll = 10
-            secondBonusRoll = if (frameAfterNext == "X") 10 else frameAfterNext[0].digitToInt()
-        } else {
-            val bonusRolls = getRollsScores(nextFrame)
-            firstBonusRoll = bonusRolls.first
-            secondBonusRoll = bonusRolls.second
-        }
-
-        Frame(firstRoll, firstBonusRoll = firstBonusRoll, secondBonusRoll = secondBonusRoll)
+        Frame(firstRoll, firstBonusRoll = bonusRolls[0], secondBonusRoll = bonusRolls[1])
     } else {
         val (firstRoll, secondRoll) = getRollsScores(frame)
 
