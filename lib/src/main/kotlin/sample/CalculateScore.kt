@@ -4,7 +4,7 @@
 package sample
 
 fun calculateScore(input: String): Int {
-    val frames = input.split("||", "|").dropLast(1)
+    val frames = input.replace('-', '0').split("||", "|").dropLast(1)
 
     return calculateFramesScore(frames)
 }
@@ -22,14 +22,14 @@ internal tailrec fun calculateFramesScore(frames: List<String>): Int {
 
         if (nextFrames[0] == "X") {
             score += 10
-            if (nextFrames[1][0] != '-') score += nextFrames[1][0].digitToInt()
+            score += nextFrames[1][0].digitToInt()
         } else {
-            if (nextFrames[0][0] != '-') score += nextFrames[0][0].digitToInt()
-            if (nextFrames[0][1] != '-') score += nextFrames[0][1].digitToInt()
+            score += nextFrames[0][0].digitToInt()
+            score += nextFrames[0][1].digitToInt()
         }
     } else {
-        if (currentFrame[0] != '-') score += currentFrame[0].digitToInt()
-        if (currentFrame[1] != '-') score += currentFrame[1].digitToInt()
+        score += currentFrame[0].digitToInt()
+        score += currentFrame[1].digitToInt()
     }
 
     return score + calculateFramesScore(nextFrames)
