@@ -67,4 +67,12 @@ class CalculateScoreTest {
     fun `returns 300 for all strikes`() {
         assertThat(calculateScore("X|X|X|X|X|X|X|X|X|X||XX")).isEqualTo(300)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "3/|--|--|--|--|--|--|--|--|--||, 10",
+    )
+    fun `returns 10 + pins knocked down in next attempt for any frame with spare`(input: String, expectedScore: Int) {
+        assertThat(calculateScore(input)).isEqualTo(expectedScore)
+    }
 }
