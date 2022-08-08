@@ -8,17 +8,17 @@ fun calculateScore(input: String) = convertToFrames(input).sumOf { it.score }
 private fun convertToFrames(input: String): List<Frame> {
     val stringFrames = input.replace('-', '0').split("||", "|")
 
-    return (0..9).map {
-        val frame = stringFrames[it]
+    return stringFrames.mapIndexedNotNull { index, frame ->
+        if (index > 9) return@mapIndexedNotNull null
 
         if (frame == "X") {
             val firstRoll = 10
-            val nextFrame = stringFrames[it + 1]
+            val nextFrame = stringFrames[index + 1]
             var firstBonusRoll: Int
             var secondBonusRoll: Int
 
             if (nextFrame == "X") {
-                val secondNextFrame = stringFrames[it + 2]
+                val secondNextFrame = stringFrames[index + 2]
                 firstBonusRoll = 10
                 secondBonusRoll = if (secondNextFrame == "X") 10 else secondNextFrame[0].digitToInt()
             } else {
