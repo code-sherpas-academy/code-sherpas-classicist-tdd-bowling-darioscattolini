@@ -18,7 +18,7 @@ private tailrec fun calculateFramesScore(frames: List<String>): Int {
     val nextFrames = frames.drop(1)
 
     val score = if (currentFrame == "X") {
-        calculateStrikeScore(nextFrames[0], nextFrames[1])
+        calculateStrikeScore(nextFrames.getOrElse(0) { "00" }, nextFrames.getOrElse(1) { "00" })
     } else {
         addKnockedDownPins(currentFrame)
     }
