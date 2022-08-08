@@ -48,4 +48,12 @@ class CalculateScoreTest {
     fun `returns 10 + pins knocked down in next two attempts for any frame with strike`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "--|--|--|--|--|--|--|--|--|X||--, 10",
+    )
+    fun `adds two extra attempts after strike in last frame`(input: String, expectedScore: Int) {
+        assertThat(calculateScore(input)).isEqualTo(expectedScore)
+    }
 }
