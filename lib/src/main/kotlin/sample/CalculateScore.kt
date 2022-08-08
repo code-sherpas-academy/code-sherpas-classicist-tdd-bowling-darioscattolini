@@ -4,10 +4,12 @@
 package sample
 
 fun calculateScore(input: String): Int {
-    val frames = input.replace('-', '0').split("||", "|").dropLast(1)
+    val frames = getFrames(input)
 
     return calculateFramesScore(frames)
 }
+
+internal fun getFrames(input: String) = input.replace('-', '0').split("||", "|").dropLast(1)
 
 internal tailrec fun calculateFramesScore(frames: List<String>): Int {
     if (frames.isEmpty()) return 0
