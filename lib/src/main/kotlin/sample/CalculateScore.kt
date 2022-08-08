@@ -7,19 +7,19 @@ fun calculateScore(input: String) = convertToFrames(input).sumOf { it.score }
 
 private fun convertToFrames(input: String): List<Frame> {
     val stringFrames = input.replace('-', '0').split("||", "|")
-    val frameData = stringFrames.windowed(3, 1, true).take(10)
+    val frameData = stringFrames.windowed(3, 1, true)
+        .take(10)
+        .map { Triple(it[0], it.getOrElse(1) { "00" }, it.getOrElse(2) { "00" }) }
 
     return frameData.map {
-        val frame = it.first()
+        val (frame, nextFrame, frameAfterNext) = it
 
         if (frame == "X") {
             val firstRoll = 10
-            val nextFrame = it[1]
             var firstBonusRoll: Int
             var secondBonusRoll: Int
 
             if (nextFrame == "X") {
-                val frameAfterNext = it[2]
                 firstBonusRoll = 10
                 secondBonusRoll = if (frameAfterNext == "X") 10 else frameAfterNext[0].digitToInt()
             } else {
