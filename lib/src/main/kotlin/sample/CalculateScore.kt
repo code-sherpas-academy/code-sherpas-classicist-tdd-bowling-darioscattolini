@@ -24,6 +24,11 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
             .map { if (it == 'X') 10 else it.digitToInt()}
 
         Frame(firstRoll, firstBonusRoll = bonusRolls[0], secondBonusRoll = bonusRolls[1])
+    } else if (frame[1] == '/') {
+        val firstRoll = frame[0].digitToInt()
+        val secondRoll = 10 - firstRoll
+
+        Frame(firstRoll, secondRoll)
     } else {
         val (firstRoll, secondRoll) = getRollsScores(frame)
 
