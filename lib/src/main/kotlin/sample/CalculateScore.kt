@@ -19,18 +19,28 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
 
     if (frame == "X") {
         val firstRoll = 10
-        val bonusRolls = (nextFrame.toCharArray() + frameAfterNext.toCharArray())
-            .take(2)
-            .map { if (it == 'X') 10 else it.digitToInt() }
+        val bonusRolls = getBonusRolls(BonusRollsAmount.TWO, nextFrame, frameAfterNext)
 
         firstRoll + bonusRolls[0] + bonusRolls[1]
     } else if (frame[1] == '/') {
         val firstRoll = frame[0].digitToInt()
         val secondRoll = 10 - firstRoll
-        val bonusRoll = if (nextFrame[0] == 'X') 10 else nextFrame[0].digitToInt()
+        val bonusRoll = getBonusRolls(BonusRollsAmount.ONE, nextFrame, frameAfterNext).first()
 
         firstRoll + secondRoll + bonusRoll
     } else {
         frame[0].digitToInt() + frame[1].digitToInt()
     }
+}
+
+private enum class BonusRollsAmount {
+    ONE, TWO
+}
+
+private fun getBonusRolls(amount: BonusRollsAmount, nextFrame: String, frameAfterNext: String): List<Int> {
+    val rollsAmount = if (amount == BonusRollsAmount.ONE) 1 else 2
+
+    return (nextFrame.toCharArray() + frameAfterNext.toCharArray())
+        .take(rollsAmount)
+        .map { if (it == 'X') 10 else it.digitToInt() }
 }
