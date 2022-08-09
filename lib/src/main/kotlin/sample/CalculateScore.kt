@@ -3,14 +3,17 @@
  */
 package sample
 
-fun calculateScore(input: String) = convertToFrames(input).sum()
+fun calculateScore(input: String): Int {
+    val frames = getFramesData(input)
 
-private fun convertToFrames(input: String): List<Int> {
+    return frames.map(calculateFrameScore).sum()
+}
+
+private fun getFramesData(input: String): List<List<String>> {
     val stringFrames = input.replace('-', '0').split("||", "|")
-    val frameData = stringFrames.windowed(3, 1, true)
-        .take(10)
 
-    return frameData.map(calculateFrameScore)
+    return stringFrames.windowed(3, 1, true)
+        .take(10)
 }
 
 private val calculateFrameScore = { frameData: List<String> ->
