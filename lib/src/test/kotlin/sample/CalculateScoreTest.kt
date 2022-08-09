@@ -85,7 +85,7 @@ class CalculateScoreTest {
 
     @ParameterizedTest
     @CsvSource(
-        "--|--|--|--|--|--|--|--|--|3/||--, 10",
+        "--|--|--|--|--|--|--|--|--|3/||-, 10",
     )
     fun `adds one extra attempt after spare in last frame`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
