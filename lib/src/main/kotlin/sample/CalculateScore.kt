@@ -21,13 +21,13 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
         val firstRoll = 10
         val bonusRolls = (nextFrame.toCharArray() + frameAfterNext.toCharArray())
             .take(2)
-            .map { if (it == 'X') 10 else it.digitToInt()}
+            .map { if (it == 'X') 10 else it.digitToInt() }
 
         Frame(firstRoll, firstBonusRoll = bonusRolls[0], secondBonusRoll = bonusRolls[1])
     } else if (frame[1] == '/') {
         val firstRoll = frame[0].digitToInt()
         val secondRoll = 10 - firstRoll
-        val bonusRoll = nextFrame[0].digitToInt()
+        val bonusRoll = if (nextFrame[0] == 'X') 10 else nextFrame[0].digitToInt()
 
         Frame(firstRoll, secondRoll, bonusRoll)
     } else {
