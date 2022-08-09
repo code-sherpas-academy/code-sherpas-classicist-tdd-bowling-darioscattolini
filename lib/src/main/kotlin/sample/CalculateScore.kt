@@ -3,9 +3,9 @@
  */
 package sample
 
-fun calculateScore(input: String) = convertToFrames(input).sumOf { it.score }
+fun calculateScore(input: String) = convertToFrames(input).sum()
 
-private fun convertToFrames(input: String): List<Frame> {
+private fun convertToFrames(input: String): List<Int> {
     val stringFrames = input.replace('-', '0').split("||", "|")
     val frameData = stringFrames.windowed(3, 1, true)
         .take(10)
@@ -23,14 +23,14 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
             .take(2)
             .map { if (it == 'X') 10 else it.digitToInt() }
 
-        Frame(firstRoll, firstBonusRoll = bonusRolls[0], secondBonusRoll = bonusRolls[1])
+        firstRoll + bonusRolls[0] + bonusRolls[1]
     } else if (frame[1] == '/') {
         val firstRoll = frame[0].digitToInt()
         val secondRoll = 10 - firstRoll
         val bonusRoll = if (nextFrame[0] == 'X') 10 else nextFrame[0].digitToInt()
 
-        Frame(firstRoll, secondRoll, bonusRoll)
+        firstRoll + secondRoll + bonusRoll
     } else {
-        Frame(frame[0].digitToInt(), frame[1].digitToInt())
+        frame[0].digitToInt() + frame[1].digitToInt()
     }
 }
