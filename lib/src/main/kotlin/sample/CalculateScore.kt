@@ -18,18 +18,15 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
     val (frame, nextFrame, frameAfterNext) = frameData
 
     if (frame == "X") {
-        val firstRoll = 10
         val bonusRolls = getBonusRolls(BonusRollsAmount.TWO, nextFrame, frameAfterNext)
 
-        firstRoll + bonusRolls[0] + bonusRolls[1]
+        10 + bonusRolls.sum()
     } else if (frame[1] == '/') {
-        val firstRoll = frame[0].digitToInt()
-        val secondRoll = 10 - firstRoll
-        val bonusRoll = getBonusRolls(BonusRollsAmount.ONE, nextFrame, frameAfterNext).first()
+        val bonusRoll = getBonusRolls(BonusRollsAmount.ONE, nextFrame, frameAfterNext)
 
-        firstRoll + secondRoll + bonusRoll
+        10 + bonusRoll.first()
     } else {
-        frame[0].digitToInt() + frame[1].digitToInt()
+        frame.sumOf { it.digitToInt() }
     }
 }
 
