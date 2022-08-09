@@ -31,11 +31,9 @@ private fun getBonusRolls(nextAttempts: List<String>): List<Int> {
     if (nextRolls.size < 2 && nextAttempts.size == 2) nextRolls += nextAttempts.last().toCharArray().toList()
     nextRolls = nextRolls.take(2)
 
-    if (nextRolls.size == 2 && nextRolls [1] == '/') {
-        val first = nextRolls.first()
-        val second = (10 - nextRolls.first().digitToInt()).digitToChar()
-        nextRolls = listOf(first, second)
-    }
-
-    return nextRolls.map { if (it == 'X') 10 else it.digitToInt() }
+    return nextRolls.mapIndexed { index, roll -> when (roll) {
+        'X' -> 10
+        '/' -> 10 - nextRolls[index - 1].digitToInt()
+        else -> roll.digitToInt()
+    } }
 }
