@@ -31,10 +31,6 @@ private val buildFrame = { frameData: Triple<String, String, String> ->
 
         Frame(firstRoll, secondRoll, bonusRoll)
     } else {
-        val (firstRoll, secondRoll) = getRollsScores(frame)
-
-        Frame(firstRoll, secondRoll)
+        Frame(frame[0].digitToInt(), frame[1].digitToInt())
     }
 }
-
-private fun getRollsScores(frame: String): Pair<Int, Int> = Pair(frame[0].digitToInt(), frame[1].digitToInt())
