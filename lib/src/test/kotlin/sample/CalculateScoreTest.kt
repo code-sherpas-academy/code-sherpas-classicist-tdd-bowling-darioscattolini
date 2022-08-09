@@ -71,6 +71,8 @@ class CalculateScoreTest {
     @ParameterizedTest
     @CsvSource(
         "3/|--|--|--|--|--|--|--|--|--||, 10",
+        "3/|3-|--|--|--|--|--|--|--|--||, 13",
+        "3/|-4|--|--|--|--|--|--|--|--||, 10",
     )
     fun `returns 10 + pins knocked down in next attempt for any frame with spare`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
