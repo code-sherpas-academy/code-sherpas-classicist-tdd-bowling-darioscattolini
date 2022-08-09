@@ -9,22 +9,18 @@ private fun convertToFrames(input: String): List<Int> {
     val stringFrames = input.replace('-', '0').split("||", "|")
     val frameData = stringFrames.windowed(3, 1, true)
         .take(10)
-        .map { Triple(it[0], it.getOrElse(1) { "00" }, it.getOrElse(2) { "00" }) }
 
     return frameData.map(buildFrame)
 }
 
-private val buildFrame = { frameData: Triple<String, String, String> ->
-    val (frame, nextFrame, frameAfterNext) = frameData
+private val buildFrame = { frameData: List<String> ->
+    val frame = frameData.first()
+    val nextAttempts = frameData.drop(1)
 
     if (frame == "X") {
-        val bonusRolls = getBonusRolls(BonusRollsAmount.TWO, nextFrame, frameAfterNext)
-
-        10 + bonusRolls.sum()
+        10 +  getBonusRolls(BonusRollsAmount.TWO, nextAttempts).sum()
     } else if (frame[1] == '/') {
-        val bonusRoll = getBonusRolls(BonusRollsAmount.ONE, nextFrame, frameAfterNext)
-
-        10 + bonusRoll.first()
+        10 + getBonusRolls(BonusRollsAmount.ONE, nextAttempts).first()
     } else {
         frame.sumOf { it.digitToInt() }
     }
@@ -34,10 +30,11 @@ private enum class BonusRollsAmount {
     ONE, TWO
 }
 
-private fun getBonusRolls(amount: BonusRollsAmount, nextFrame: String, frameAfterNext: String): List<Int> {
+private fun getBonusRolls(amount: BonusRollsAmount, nextAttempts: List<String>): List<Int> {
     val rollsAmount = if (amount == BonusRollsAmount.ONE) 1 else 2
+    var nextRolls = nextAttempts.first().toCharArray()
+    if (nextAttempts.size == 2) nextRolls += nextAttempts.last().toCharArray()
 
-    return (nextFrame.toCharArray() + frameAfterNext.toCharArray())
-        .take(rollsAmount)
+    return nextRolls.take(rollsAmount)
         .map { if (it == 'X') 10 else it.digitToInt() }
 }
