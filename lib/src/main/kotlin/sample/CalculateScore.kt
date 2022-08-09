@@ -17,12 +17,10 @@ private val buildFrame = { frameData: List<String> ->
     val frame = frameData.first()
     val bonusRolls = getBonusRolls(frameData.drop(1))
 
-    if (frame == "X") {
-        10 + bonusRolls.sum()
-    } else if (frame[1] == '/') {
-        10 + bonusRolls.first()
-    } else {
-        frame.sumOf { it.digitToInt() }
+    when {
+        frame == "X" -> 10 + bonusRolls.sum()
+        frame[1] == '/' -> 10 + bonusRolls.first()
+        else -> frame.sumOf { it.digitToInt() }
     }
 }
 
