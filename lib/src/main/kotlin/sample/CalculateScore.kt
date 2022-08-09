@@ -10,10 +10,10 @@ private fun convertToFrames(input: String): List<Int> {
     val frameData = stringFrames.windowed(3, 1, true)
         .take(10)
 
-    return frameData.map(buildFrame)
+    return frameData.map(calculateFrameScore)
 }
 
-private val buildFrame = { frameData: List<String> ->
+private val calculateFrameScore = { frameData: List<String> ->
     val frame = frameData.first()
     val bonusRolls = getBonusRolls(frameData.drop(1))
 
