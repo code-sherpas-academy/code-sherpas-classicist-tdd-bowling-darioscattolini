@@ -94,4 +94,9 @@ class CalculateScoreTest {
     fun `adds one extra attempt after spare in last frame`(input: String, expectedScore: Int) {
         assertThat(calculateScore(input)).isEqualTo(expectedScore)
     }
+
+    @Test
+    fun `returns correct score for full input including spare, strikes and extra rolls`() {
+        assertThat(calculateScore("X|7/|9-|X|-8|8/|-6|X|X|X||81")).isEqualTo(167)
+    }
 }
